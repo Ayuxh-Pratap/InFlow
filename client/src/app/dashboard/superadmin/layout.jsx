@@ -135,16 +135,16 @@ export function DashboardLayout({ children }) {
 
           {/* Navigation Links */}
           <nav className="hidden items-center gap-8 md:flex">
-            <Button variant="ghost" className="text-white/80 hover:text-white">
+            <Button variant="ghost" className="text-white/80 hover:bg-white/10 hover:text-white">
               Projects
             </Button>
-            <Button variant="ghost" className="text-white/80 hover:text-white">
+            <Button variant="ghost" className="text-white/80 hover:bg-white/10 hover:text-white">
               Profile
             </Button>
-            <Button variant="ghost" className="text-white/80 hover:text-white">
+            <Button variant="ghost" className="text-white/80 hover:bg-white/10 hover:text-white">
               Search
             </Button>
-            <Button variant="ghost" className="text-white/80 hover:text-white">
+            <Button variant="ghost" className="text-white/80 hover:bg-white/10 hover:text-white">
               About
             </Button>
           </nav>
@@ -183,7 +183,7 @@ export function DashboardLayout({ children }) {
         </div>
       </header>
 
-      <div className="flex min-h-screen flex-col pt-28">
+      <div className="flex min-h-screen flex-col py-28">
         {/* Main Content */}
         <main className="flex-1">{children}</main>
 
