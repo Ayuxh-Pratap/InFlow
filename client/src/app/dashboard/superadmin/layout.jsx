@@ -91,13 +91,27 @@ export function DashboardLayout({ children }) {
   const [searchQuery, setSearchQuery] = React.useState("")
   const pathname = usePathname()
 
+  React.useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') setIsOpen(false)
+    }
+
+    if (isOpen) {
+      document.addEventListener('keydown', handleEscape)
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscape)
+    }
+  }, [isOpen])
+
   // Filter navigation items based on search query
   const filteredGroups = React.useMemo(() => {
     if (!searchQuery) return navigationGroups
-
+    
     return navigationGroups.map(group => ({
       ...group,
-      items: group.items.filter(item =>
+      items: group.items.filter(item => 
         item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         item.subtitle.toLowerCase().includes(searchQuery.toLowerCase())
       )
@@ -107,7 +121,7 @@ export function DashboardLayout({ children }) {
   return (
     <div className="relative min-h-screen global-bg">
       {/* Top Navigation Bar */}
-      <header className="fixed top-0 z-10 w-full border-b border-white/10 bg-black backdrop-blur-md">
+      <header className="fixed top-0 z-50 w-full border-b border-white/10 bg-black backdrop-blur-md">
         <div className="flex h-16 items-center justify-between px-6">
           {/* Logo */}
           <div className="flex items-center gap-2">
@@ -137,8 +151,10 @@ export function DashboardLayout({ children }) {
 
           {/* Sign Out Button */}
           <Button
-            className="hidden hover:text-transparent bg-transparent hover:bg-transparent md:block"
+            variant="ghost"
+            className="hidden text-white/80 hover:text-white md:block"
           >
+            
           </Button>
 
           {/* Mobile Menu Button */}
@@ -167,14 +183,20 @@ export function DashboardLayout({ children }) {
         </div>
       </header>
 
-      <div className="flex min-h-screen flex-col pt-16">
+      <div className="flex min-h-screen flex-col pt-28">
         {/* Main Content */}
-        <main className="flex-1 p-6">{children}</main>
+        <main className="flex-1">{children}</main>
 
+        {isOpen && (
+          <div 
+            className="fixed inset-0 bg-black/60 transition-opacity z-40"
+            onClick={() => setIsOpen(false)}
+          />
+        )}
         {/* Sidebar */}
         <div
           className={cn(
-            "fixed inset-y-0 right-0 w-[400px] transform border-0 shadow-2xl border-border/40 bg-[#111111] transition-transform duration-200 ease-in-out z-50 rounded-l-3xl",
+            "fixed inset-y-0 right-0 w-[400px] transform border-0 shadow-2xl shadow-black border-border/40 bg-[#111111] transition-transform duration-200 z-50 ease-in-out rounded-l-3xl",
             isOpen ? "translate-x-0" : "translate-x-full"
           )}
         >
@@ -229,13 +251,6 @@ export function DashboardLayout({ children }) {
                       className="flex-1 bg-[#25262b] text-sm font-normal text-white hover:bg-[#25262b]/60"
                     >
                       Change Avatar
-                    </Button>
-                    <Button
-                      size="icon"
-                      className="text-background block md:hidden lg:hidden"
-                      onClick={() => setIsOpen(!isOpen)}
-                    >
-                      <AudioLines className="h-4 w-4" />
                     </Button>
                   </div>
                 </div>
