@@ -69,7 +69,7 @@ function ActionCard({ action }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: [0.25, 0.4, 0.25, 1] }}
       whileHover={{ scale: 1.02 }}
-      className="group relative h-[340px] overflow-hidden rounded-3xl bg-[#030305]/50 p-8 transition-all duration-300"
+      className="group relative h-[340px] overflow-hidden rounded-3xl bg-[#030305]/80 p-8 transition-all duration-300"
     >
       {/* Background Pattern and Bottom Gradient */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
